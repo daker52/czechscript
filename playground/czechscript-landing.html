@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CzechScript - Programovací jazyk v češtině</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            color: white;
+        }
+
+        header h1 {
+            font-size: 4rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 20px 0;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .feature {
+            padding: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            color: white;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .feature:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .code-example {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            line-height: 1.8;
+        }
+
+        .code-example .keyword {
+            color: #569cd6;
+        }
+
+        .code-example .string {
+            color: #ce9178;
+        }
+
+        .code-example .function {
+            color: #dcdcaa;
+        }
+
+        .code-example .comment {
+            color: #6a9955;
+        }
+
+        .compiler-demo {
+            margin: 40px 0;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+
+        .compiler-demo h2 {
+            margin-bottom: 20px;
+            color: #667eea;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 15px;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            resize: vertical;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 5px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .output {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            min-height: 100px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+        }
+
+        .success {
+            color: #4caf50;
+        }
+
+        .error {
+            color: #f44336;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: white;
+        }
+
+        .github-link {
+            display: inline-block;
+            margin: 20px 0;
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            padding: 10px 20px;
+            border: 2px solid white;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .github-link:hover {
+            background: white;
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🇨🇿 CzechScript</h1>
+            <p>Programovací jazyk v češtině</p>
+        </header>
+
+        <div class="main-content">
+            <h2>Co je CzechScript?</h2>
+            <p>CzechScript je open-source programovací jazyk, který vám umožňuje psát kód plně v češtině. Transpiluje se do JavaScriptu a běží všude, kde běží JavaScript.</p>
+
+            <div class="features">
+                <div class="feature">
+                    <h3>🇨🇿 Česká syntaxe</h3>
+                    <p>Pište kód v rodném jazyce</p>
+                </div>
+                <div class="feature">
+                    <h3>🚀 Rychlá kompilace</h3>
+                    <p>Okamžitý překlad do JavaScriptu</p>
+                </div>
+                <div class="feature">
+                    <h3>🔧 Moderní features</h3>
+                    <p>Třídy, async/await, moduly</p>
+                </div>
+                <div class="feature">
+                    <h3>📦 Standardní knihovna</h3>
+                    <p>Bohatá sada vestavěných funkcí</p>
+                </div>
+            </div>
+
+            <h2>Ukázka syntaxe</h2>
+            
+            <div class="code-example">
+<span class="comment">// Definice třídy</span>
+<span class="keyword">třída</span> <span class="function">Osoba</span> {
+    <span class="keyword">konstruktor</span>(jméno, věk) {
+        <span class="keyword">tento</span>.jméno = jméno;
+        <span class="keyword">tento</span>.věk = věk;
+    }
+    
+    <span class="function">představSe</span>() {
+        <span class="function">vypis</span>(<span class="string">"Ahoj, jmenuji se "</span> + <span class="keyword">tento</span>.jméno);
+    }
+}
+
+<span class="comment">// Použití</span>
+<span class="keyword">proměnná</span> jan = <span class="keyword">nový</span> Osoba(<span class="string">"Jan"</span>, 25);
+jan.<span class="function">představSe</span>();
+
+<span class="comment">// Cykly</span>
+<span class="keyword">opakuj</span> (5) {
+    <span class="function">vypis</span>(<span class="string">"Ahoj!"</span>);
+}
+
+<span class="keyword">pro_každý</span> (jméno <span class="keyword">v</span> [<span class="string">"Jan"</span>, <span class="string">"Eva"</span>, <span class="string">"Petr"</span>]) {
+    <span class="function">vypis</span>(<span class="string">"Zdravím "</span> + jméno);
+}
+
+<span class="comment">// DOM manipulace</span>
+<span class="keyword">proměnná</span> tlačítko = <span class="function">prvek</span>(<span class="string">"#moje-tlačítko"</span>);
+<span class="function">poKliknutí</span>(tlačítko, <span class="keyword">funkce</span>() {
+    <span class="function">vypis</span>(<span class="string">"Kliknuto!"</span>);
+});
+            </div>
+
+            <div class="compiler-demo">
+                <h2>Vyzkoušejte CzechScript online!</h2>
+                <p>Napište CzechScript kód a uvidíte přeložený JavaScript:</p>
+                
+                <textarea id="inputCode" placeholder="Zadejte CzechScript kód...">proměnná jméno = "Jan";
+konstanta věk = 25;
+
+funkce pozdrav(jméno) {
+    vrať "Ahoj, " + jméno + "!";
+}
+
+vypis(pozdrav(jméno));
+
+když (věk >= 18) pak {
+    vypis("Jsi dospělý");
+} jinak {
+    vypis("Jsi dítě");
+}</textarea>
+
+                <button class="btn" onclick="compileCode()">🔨 Zkompilovat</button>
+                <button class="btn" onclick="runCode()">▶️ Zkompilovat a spustit</button>
+                <button class="btn" onclick="showAST()">🌳 Zobrazit AST</button>
+                
+                <div class="output" id="output">Výstup se zobrazí zde...</div>
+            </div>
+
+            <h2>Klíčové vlastnosti</h2>
+            <ul style="padding-left: 20px; margin: 20px 0; line-height: 2;">
+                <li>✅ Plně česká syntaxe - <code>proměnná</code>, <code>funkce</code>, <code>třída</code></li>
+                <li>✅ Logické operátory - <code>a</code>, <code>nebo</code>, <code>ne</code></li>
+                <li>✅ Podmínky - <code>když</code>, <code>jinak</code></li>
+                <li>✅ Cykly - <code>opakuj</code>, <code>dokud</code>, <code>pro_každý</code></li>
+                <li>✅ Třídy a dědičnost - <code>třída</code>, <code>rozšiřuje</code></li>
+                <li>✅ Error handling - <code>zkus</code>, <code>chyť</code>, <code>nakonec</code></li>
+                <li>✅ Moduly - <code>importuj</code>, <code>exportuj</code></li>
+                <li>✅ Type annotations - <code>proměnná x: číslo</code></li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 CzechScript by daker52</p>
+            <a href="https://github.com/daker52/czechscript" class="github-link">📦 GitHub Repository</a>
+        </footer>
+    </div>
+
+    <!-- Include runtime and compiler -->
+    <script src="../czechscript/src/runtime.js"></script>
+    <script>
+        // Minimální verze compileru pro demo
+        // V produkci by se načítaly skutečné moduly
+        
+        function compileCode() {
+            const input = document.getElementById('inputCode').value;
+            const output = document.getElementById('output');
+            
+            try {
+                // Simulace kompilace (pro demo)
+                const jsCode = transpileSimple(input);
+                output.innerHTML = '<div class="success">✅ Kompilace úspěšná!</div>\n\n' + jsCode;
+            } catch (error) {
+                output.innerHTML = '<div class="error">❌ Chyba: ' + error.message + '</div>';
+            }
+        }
+        
+        function runCode() {
+            const input = document.getElementById('inputCode').value;
+            const output = document.getElementById('output');
+            
+            try {
+                const jsCode = transpileSimple(input);
+                output.innerHTML = '<div class="success">▶️ Spuštěno:</div>\n\n';
+                
+                // Redirect console.log to output
+                const originalLog = console.log;
+                console.log = function(...args) {
+                    output.innerHTML += args.join(' ') + '\n';
+                    originalLog.apply(console, args);
+                };
+                
+                eval(jsCode);
+                
+                // Restore console.log
+                console.log = originalLog;
+            } catch (error) {
+                output.innerHTML = '<div class="error">❌ Chyba při běhu: ' + error.message + '</div>';
+            }
+        }
+        
+        function showAST() {
+            const input = document.getElementById('inputCode').value;
+            const output = document.getElementById('output');
+            
+            output.innerHTML = '<div class="success">🌳 AST (Abstract Syntax Tree):</div>\n\nPro zobrazení AST použijte CLI: czechscript --ast soubor.cs';
+        }
+        
+        // Jednoduchý transpiler pro demo (není kompletní - pro skutečnou kompilaci použijte hlavní compiler)
+        function transpileSimple(code) {
+            let js = code;
+            
+            // Keywords
+            js = js.replace(/\bproměnná\b/g, 'let');
+            js = js.replace(/\bkonstanta\b/g, 'const');
+            js = js.replace(/\bfunkce\b/g, 'function');
+            js = js.replace(/\bvrať\b/g, 'return');
+            js = js.replace(/\bkdyž\b/g, 'if');
+            js = js.replace(/\bpak\b/g, '');
+            js = js.replace(/\bjinak\b/g, 'else');
+            js = js.replace(/\bdokud\b/g, 'while');
+            js = js.replace(/\btřída\b/g, 'class');
+            js = js.replace(/\bkonstruktor\b/g, 'constructor');
+            js = js.replace(/\btento\b/g, 'this');
+            js = js.replace(/\bnový\b/g, 'new');
+            js = js.replace(/\brozšiřuje\b/g, 'extends');
+            js = js.replace(/\bpravda\b/g, 'true');
+            js = js.replace(/\bnepravda\b/g, 'false');
+            
+            // Operators
+            js = js.replace(/\ba\b/g, '&&');
+            js = js.replace(/\bnebo\b/g, '||');
+            js = js.replace(/\bne\b/g, '!');
+            js = js.replace(/\brovno\b/g, '===');
+            js = js.replace(/\bnerovno\b/g, '!==');
+            js = js.replace(/\větší_rovno\b/g, '>=');
+            js = js.replace(/\bmenší_rovno\b/g, '<=');
+            js = js.replace(/\bvětší\b/g, '>');
+            js = js.replace(/\bmenší\b/g, '<');
+            
+            // For loops
+            js = js.replace(/\bpro_každý\s*\(([^)]+)\s+v\s+([^)]+)\)/g, 'for (const $1 of $2)');
+            js = js.replace(/\bopakuj\s*\(([^)]+)\)/g, 'for (let __i = 0; __i < $1; __i++)');
+            
+            return js;
+        }
+    </script>
+</body>
+</html>

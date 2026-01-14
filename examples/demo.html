@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CzechScript - Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 48px;
+        }
+        
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .demo-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .demo-card h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+        
+        .demo-card pre {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+        }
+        
+        .result {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+        }
+        
+        .result.show {
+            display: block;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        
+        .box {
+            width: 100%;
+            height: 150px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 15px 0;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .box.aktivní {
+            background: #667eea;
+            color: white;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🇨🇿 CzechScript Demo</h1>
+        
+        <div class="demo-grid">
+            <!-- Demo 1: Základní výpis -->
+            <div class="demo-card">
+                <h2>1. Základní výpis</h2>
+                <pre>
+proměnná jméno = "Ondřej"
+vypis("Ahoj, " + jméno + "!")</pre>
+                <button když="klik" pak="demo1">Spustit</button>
+                <div class="result" id="result1"></div>
+            </div>
+            
+            <!-- Demo 2: Podmínky -->
+            <div class="demo-card">
+                <h2>2. Podmínky</h2>
+                <input type="number" id="vek" placeholder="Zadejte věk" value="25">
+                <pre>
+když (věk >= 18) {
+    pak vypis("Dospělý")
+} jinak {
+    vypis("Nezletilý")
+}</pre>
+                <button když="klik" pak="demo2">Spustit</button>
+                <div class="result" id="result2"></div>
+            </div>
+            
+            <!-- Demo 3: Smyčka -->
+            <div class="demo-card">
+                <h2>3. Smyčka</h2>
+                <pre>
+proměnná i = 0
+dokud (i < 5) {
+    vypis("Číslo: " + i)
+    i = i + 1
+}</pre>
+                <button když="klik" pak="demo3">Spustit</button>
+                <div class="result" id="result3"></div>
+            </div>
+            
+            <!-- Demo 4: Funkce -->
+            <div class="demo-card">
+                <h2>4. Funkce</h2>
+                <input type="text" id="userName" placeholder="Vaše jméno" value="Ondřej">
+                <pre>
+funkce pozdrav(jméno) {
+    vrať "Ahoj, " + jméno + "! 👋"
+}</pre>
+                <button když="klik" pak="demo4">Pozdravit</button>
+                <div class="result" id="result4"></div>
+            </div>
+            
+            <!-- Demo 5: DOM manipulace -->
+            <div class="demo-card">
+                <h2>5. DOM Manipulace</h2>
+                <div class="box" id="demoBox">
+                    Najeď na mě myší!
+                </div>
+                <pre>
+prvek(".box") když=najetí_myší {
+    pak přidej_třídu("aktivní")
+}</pre>
+            </div>
+            
+            <!-- Demo 6: Event handling -->
+            <div class="demo-card">
+                <h2>6. Klikací tlačítko</h2>
+                <button id="klikTlacitko" když="klik" pak="zvyšPočítadlo">
+                    Klikni: <span id="počítadlo">0</span>
+                </button>
+                <pre>
+proměnná počet = 0
+když (klik) {
+    pak počet = počet + 1
+}</pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- Načtení CzechScript engine -->
+    <script src="../src/czechscript.js"></script>
+    
+    <!-- JavaScript pro demo funkce -->
+    <script>
+        const engine = new CzechScript();
+        
+        // Demo 1
+        window.demo1 = function() {
+            const code = `
+                proměnná jméno = "Ondřej"
+                vypis("Ahoj, " + jméno + "!")
+            `;
+            const result = document.getElementById('result1');
+            result.textContent = 'Výstup v konzoli: Ahoj, Ondřej!';
+            result.classList.add('show');
+            engine.run(code);
+        };
+        
+        // Demo 2
+        window.demo2 = function() {
+            const vek = document.getElementById('vek').value;
+            const code = `
+                proměnná věk = ${vek}
+                když (věk >= 18) {
+                    vypis("Dospělý")
+                } jinak {
+                    vypis("Nezletilý")
+                }
+            `;
+            const result = document.getElementById('result2');
+            result.textContent = vek >= 18 ? 'Výsledek: Dospělý ✅' : 'Výsledek: Nezletilý ❌';
+            result.classList.add('show');
+            engine.run(code);
+        };
+        
+        // Demo 3
+        window.demo3 = function() {
+            const code = `
+                proměnná i = 0
+                dokud (i < 5) {
+                    vypis("Číslo: " + i)
+                    i = i + 1
+                }
+            `;
+            const result = document.getElementById('result3');
+            result.textContent = 'Výstup v konzoli: Číslo 0-4';
+            result.classList.add('show');
+            engine.run(code);
+        };
+        
+        // Demo 4
+        window.demo4 = function() {
+            const userName = document.getElementById('userName').value;
+            const code = `
+                funkce pozdrav(jméno) {
+                    vrať "Ahoj, " + jméno + "! 👋"
+                }
+                vypis(pozdrav("${userName}"))
+            `;
+            const result = document.getElementById('result4');
+            result.textContent = `Ahoj, ${userName}! 👋`;
+            result.classList.add('show');
+            engine.run(code);
+        };
+        
+        // Demo 5 - hover efekt
+        document.getElementById('demoBox').addEventListener('mouseenter', function() {
+            this.classList.add('aktivní');
+        });
+        document.getElementById('demoBox').addEventListener('mouseleave', function() {
+            this.classList.remove('aktivní');
+        });
+        
+        // Demo 6 - počítadlo
+        window.zvyšPočítadlo = function() {
+            window.počítadlo = (window.počítadlo || 0) + 1;
+            document.getElementById('počítadlo').textContent = window.počítadlo;
+        };
+    </script>
+</body>
+</html>

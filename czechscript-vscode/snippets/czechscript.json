@@ -1,0 +1,696 @@
+{
+  "Proměnná": {
+    "prefix": "pro",
+    "body": ["proměnná ${1:název} = ${2:hodnota};"],
+    "description": "Vytvoří proměnnou"
+  },
+  "Konstanta": {
+    "prefix": "kon",
+    "body": ["konstanta ${1:NÁZEV} = ${2:hodnota};"],
+    "description": "Vytvoří konstantu"
+  },
+  "Funkce": {
+    "prefix": "funkce",
+    "body": [
+      "funkce ${1:název}(${2:parametry}) {",
+      "\t${3:// kód}",
+      "\tvrať ${4:výsledek};",
+      "}"
+    ],
+    "description": "Vytvoří funkci"
+  },
+  "Arrow Funkce": {
+    "prefix": "arrow",
+    "body": ["proměnná ${1:název} = (${2:parametry}) => ${3:výraz};"],
+    "description": "Vytvoří arrow funkci"
+  },
+  "Async Funkce": {
+    "prefix": "async",
+    "body": [
+      "async funkce ${1:název}(${2:parametry}) {",
+      "\t${3:// kód}",
+      "\tvrať await ${4:výsledek};",
+      "}"
+    ],
+    "description": "Vytvoří async funkci"
+  },
+  "Třída": {
+    "prefix": "třída",
+    "body": [
+      "třída ${1:Název} {",
+      "\tkonstruktor(${2:parametry}) {",
+      "\t\t${3:// inicializace}",
+      "\t}",
+      "\t",
+      "\t${4:metoda}() {",
+      "\t\t${5:// kód}",
+      "\t}",
+      "}"
+    ],
+    "description": "Vytvoří třídu"
+  },
+  "Třída s děděním": {
+    "prefix": "třída-dědí",
+    "body": [
+      "třída ${1:Potomek} rozšiřuje ${2:Rodič} {",
+      "\tkonstruktor(${3:parametry}) {",
+      "\t\tsuper(${4:super_parametry});",
+      "\t\t${5:// inicializace}",
+      "\t}",
+      "}"
+    ],
+    "description": "Vytvoří třídu s děděním"
+  },
+  "If podmínka": {
+    "prefix": "když",
+    "body": ["když (${1:podmínka}) pak {", "\t${2:// kód}", "}"],
+    "description": "Vytvoří if podmínku"
+  },
+  "If-Else": {
+    "prefix": "když-jinak",
+    "body": [
+      "když (${1:podmínka}) pak {",
+      "\t${2:// kód}",
+      "} jinak {",
+      "\t${3:// kód}",
+      "}"
+    ],
+    "description": "Vytvoří if-else"
+  },
+  "While cyklus": {
+    "prefix": "dokud",
+    "body": ["dokud (${1:podmínka}) {", "\t${2:// kód}", "}"],
+    "description": "Vytvoří while cyklus"
+  },
+  "For Each": {
+    "prefix": "pro-každý",
+    "body": ["pro_každý (${1:položka} v ${2:pole}) {", "\t${3:// kód}", "}"],
+    "description": "Vytvoří for-each cyklus"
+  },
+  "Opakuj N-krát": {
+    "prefix": "opakuj",
+    "body": ["opakuj (${1:počet}) {", "\t${2:// kód}", "}"],
+    "description": "Opakuje kód N-krát"
+  },
+  "Try-Catch": {
+    "prefix": "zkus",
+    "body": [
+      "zkus {",
+      "\t${1:// kód}",
+      "} chyť (${2:chyba}) {",
+      "\t${3:// zpracování chyby}",
+      "}"
+    ],
+    "description": "Vytvoří try-catch"
+  },
+  "Try-Catch-Finally": {
+    "prefix": "zkus-nakonec",
+    "body": [
+      "zkus {",
+      "\t${1:// kód}",
+      "} chyť (${2:chyba}) {",
+      "\t${3:// zpracování chyby}",
+      "} nakonec {",
+      "\t${4:// vždy}",
+      "}"
+    ],
+    "description": "Vytvoří try-catch-finally"
+  },
+  "Console Log": {
+    "prefix": "vypis",
+    "body": ["vypis(${1:text});"],
+    "description": "Vypíše do konzole"
+  },
+  "Console Error": {
+    "prefix": "chyba",
+    "body": ["vypisChybu(${1:chyba});"],
+    "description": "Vypíše chybu"
+  },
+  "DOM - Prvek": {
+    "prefix": "prvek",
+    "body": ["proměnná ${1:element} = prvek('${2:#selector}');"],
+    "description": "Získá DOM element"
+  },
+  "DOM - Prvky": {
+    "prefix": "prvky",
+    "body": ["proměnná ${1:elementy} = prvky('${2:.selector}');"],
+    "description": "Získá všechny DOM elementy"
+  },
+  "DOM - Po kliknutí": {
+    "prefix": "klik",
+    "body": [
+      "poKliknutí(${1:element}, funkce() {",
+      "\t${2:// akce}",
+      "});"
+    ],
+    "description": "Přidá event listener pro kliknutí"
+  },
+  "DOM - Po načtení": {
+    "prefix": "načtení",
+    "body": ["poNačtení(funkce() {", "\t${1:// kód po načtení}", "});"],
+    "description": "Spustí kód po načtení stránky"
+  },
+  "Fetch - GET": {
+    "prefix": "fetch-get",
+    "body": [
+      "async funkce ${1:získejData}() {",
+      "\tzkus {",
+      "\t\tproměnná data = await načtiData('${2:url}');",
+      "\t\tvypis(data);",
+      "\t} chyť (chyba) {",
+      "\t\tvypisChybu('Chyba:', chyba);",
+      "\t}",
+      "}"
+    ],
+    "description": "Fetch GET request"
+  },
+  "Fetch - POST": {
+    "prefix": "fetch-post",
+    "body": [
+      "async funkce ${1:odešliData}() {",
+      "\tzkus {",
+      "\t\tproměnná data = ${2:{ klíč: 'hodnota' }};",
+      "\t\tproměnná odpověď = await odesliData('${3:url}', data);",
+      "\t\tvypis(odpověď);",
+      "\t} chyť (chyba) {",
+      "\t\tvypisChybu('Chyba:', chyba);",
+      "\t}",
+      "}"
+    ],
+    "description": "Fetch POST request"
+  },
+  "LocalStorage - Ulož": {
+    "prefix": "ulož",
+    "body": ["ulož('${1:klíč}', ${2:hodnota});"],
+    "description": "Uloží do localStorage"
+  },
+  "LocalStorage - Načti": {
+    "prefix": "načti",
+    "body": ["proměnná ${1:data} = načti('${2:klíč}');"],
+    "description": "Načte z localStorage"
+  },
+  "Import": {
+    "prefix": "importuj",
+    "body": ["importuj { ${1:export1}, ${2:export2} } z '${3:modul}';"],
+    "description": "Importuje moduly"
+  },
+  "Export": {
+    "prefix": "exportuj",
+    "body": ["exportuj ${1:konstanta} ${2:NÁZEV} = ${3:hodnota};"],
+    "description": "Exportuje hodnotu"
+  },
+  "Export výchozí": {
+    "prefix": "exportuj-výchozí",
+    "body": ["exportuj výchozí ${1:hodnota};"],
+    "description": "Exportuje výchozí hodnotu"
+  },
+  "Pole": {
+    "prefix": "pole",
+    "body": ["proměnná ${1:pole} = [${2:hodnoty}];"],
+    "description": "Vytvoří pole"
+  },
+  "Objekt": {
+    "prefix": "objekt",
+    "body": [
+      "proměnná ${1:objekt} = {",
+      "\t${2:klíč}: ${3:hodnota}",
+      "};"
+    ],
+    "description": "Vytvoří objekt"
+  },
+  "Mapuj pole": {
+    "prefix": "mapuj",
+    "body": [
+      "proměnná ${1:nové} = mapuj(${2:pole}, funkce(${3:položka}) {",
+      "\tvrať ${4:výraz};",
+      "});"
+    ],
+    "description": "Mapuje pole"
+  },
+  "Filtruj pole": {
+    "prefix": "filtruj",
+    "body": [
+      "proměnná ${1:filtrované} = filtruj(${2:pole}, funkce(${3:položka}) {",
+      "\tvrať ${4:podmínka};",
+      "});"
+    ],
+    "description": "Filtruje pole"
+  },
+  "Await": {
+    "prefix": "await",
+    "body": ["proměnná ${1:výsledek} = await ${2:promise};"],
+    "description": "Await pro async operaci"
+  },
+  "Promise": {
+    "prefix": "promise",
+    "body": [
+      "nový Promise((vyřeš, zamítni) => {",
+      "\t${1:// async kód}",
+      "\tvyřeš(${2:výsledek});",
+      "})"
+    ],
+    "description": "Vytvoří Promise"
+  },
+  "Časovač": {
+    "prefix": "časovač",
+    "body": [
+      "nastavČasovač(funkce() {",
+      "\t${1:// kód}",
+      "}, ${2:1000});"
+    ],
+    "description": "Nastaví časovač"
+  },
+  "Interval": {
+    "prefix": "interval",
+    "body": [
+      "proměnná ${1:id} = nastavInterval(funkce() {",
+      "\t${2:// kód}",
+      "}, ${3:1000});"
+    ],
+    "description": "Nastaví interval"
+  },
+  "For cyklus": {
+    "prefix": "pro",
+    "body": [
+      "pro (nechť ${1:i} = 0; ${1:i} < ${2:délka}; ${1:i}++) {",
+      "\t${3:// kód}",
+      "}"
+    ],
+    "description": "Vytvoří for cyklus"
+  },
+  "For-of cyklus": {
+    "prefix": "pro-z",
+    "body": [
+      "pro (konstanta ${1:položka} z ${2:pole}) {",
+      "\t${3:// kód}",
+      "}"
+    ],
+    "description": "Vytvoří for-of cyklus"
+  },
+  "Switch": {
+    "prefix": "přepni",
+    "body": [
+      "přepni (${1:hodnota}) {",
+      "\tpřípad ${2:hodnota1}:",
+      "\t\t${3:// kód}",
+      "\t\tpřeruš;",
+      "\tpřípad ${4:hodnota2}:",
+      "\t\t${5:// kód}",
+      "\t\tpřeruš;",
+      "\tvýchozí:",
+      "\t\t${6:// kód}",
+      "}"
+    ],
+    "description": "Vytvoří switch statement"
+  },
+  "Metoda třídy": {
+    "prefix": "metoda",
+    "body": [
+      "${1:název}(${2:parametry}) {",
+      "\t${3:// kód}",
+      "\tvrať ${4:výsledek};",
+      "}"
+    ],
+    "description": "Vytvoří metodu třídy"
+  },
+  "Getter": {
+    "prefix": "getter",
+    "body": [
+      "get ${1:vlastnost}() {",
+      "\tvrať toto.${2:_vlastnost};",
+      "}"
+    ],
+    "description": "Vytvoří getter"
+  },
+  "Setter": {
+    "prefix": "setter",
+    "body": [
+      "set ${1:vlastnost}(${2:hodnota}) {",
+      "\ttoto.${3:_vlastnost} = ${2:hodnota};",
+      "}"
+    ],
+    "description": "Vytvoří setter"
+  },
+  "Statická metoda": {
+    "prefix": "statická",
+    "body": [
+      "statická ${1:název}(${2:parametry}) {",
+      "\t${3:// kód}",
+      "\tvrať ${4:výsledek};",
+      "}"
+    ],
+    "description": "Vytvoří statickou metodu"
+  },
+  "Arrow funkce s blokem": {
+    "prefix": "arrow-blok",
+    "body": [
+      "konstanta ${1:název} = (${2:parametry}) => {",
+      "\t${3:// kód}",
+      "\tvrať ${4:výsledek};",
+      "};"
+    ],
+    "description": "Vytvoří arrow funkci s blokem"
+  },
+  "IIFE": {
+    "prefix": "iife",
+    "body": [
+      "(funkce() {",
+      "\t${1:// kód}",
+      "})();"
+    ],
+    "description": "Immediately Invoked Function Expression"
+  },
+  "Destrukturování objektu": {
+    "prefix": "destr-obj",
+    "body": [
+      "konstanta { ${1:prop1}, ${2:prop2} } = ${3:objekt};"
+    ],
+    "description": "Destrukturuje objekt"
+  },
+  "Destrukturování pole": {
+    "prefix": "destr-pole",
+    "body": [
+      "konstanta [${1:první}, ${2:druhý}] = ${3:pole};"
+    ],
+    "description": "Destrukturuje pole"
+  },
+  "Template literal": {
+    "prefix": "tpl",
+    "body": [
+      "`${1:text} \\${${2:proměnná}}`"
+    ],
+    "description": "Vytvoří template literal"
+  },
+  "Spread operator": {
+    "prefix": "spread",
+    "body": [
+      "...${1:pole}"
+    ],
+    "description": "Spread operator"
+  },
+  "Rest parametry": {
+    "prefix": "rest",
+    "body": [
+      "funkce ${1:název}(...${2:args}) {",
+      "\t${3:// kód}",
+      "}"
+    ],
+    "description": "Funkce s rest parametry"
+  },
+  "Default parametr": {
+    "prefix": "default-param",
+    "body": [
+      "funkce ${1:název}(${2:param} = ${3:výchozí}) {",
+      "\t${4:// kód}",
+      "}"
+    ],
+    "description": "Funkce s výchozím parametrem"
+  },
+  "Ternární operátor": {
+    "prefix": "ternární",
+    "body": [
+      "${1:podmínka} ? ${2:pravda} : ${3:nepravda}"
+    ],
+    "description": "Ternární operátor"
+  },
+  "HTTP GET": {
+    "prefix": "http-get",
+    "body": [
+      "async funkce ${1:získej}() {",
+      "\tzkus {",
+      "\t\tkonstanta odpověď = čekej načti('${2:url}');",
+      "\t\tkonstanta data = čekej odpověď.json();",
+      "\t\tvrať data;",
+      "\t} chyť (chyba) {",
+      "\t\tvypisChybu('Chyba:', chyba);",
+      "\t}",
+      "}"
+    ],
+    "description": "HTTP GET request"
+  },
+  "HTTP POST": {
+    "prefix": "http-post",
+    "body": [
+      "async funkce ${1:odešli}() {",
+      "\tzkus {",
+      "\t\tkonstanta odpověď = čekej post('${2:url}', {",
+      "\t\t\ttělo: JSON.stringify(${3:data}),",
+      "\t\t\thlavičky: { 'Content-Type': 'application/json' }",
+      "\t\t});",
+      "\t\tkonstanta výsledek = čekej odpověď.json();",
+      "\t\tvrať výsledek;",
+      "\t} chyť (chyba) {",
+      "\t\tvypisChybu('Chyba:', chyba);",
+      "\t}",
+      "}"
+    ],
+    "description": "HTTP POST request"
+  },
+  "WebServer - Route GET": {
+    "prefix": "route-get",
+    "body": [
+      "app.get('${1:/cesta}', (req, res) => {",
+      "\tres.odešliJSON({ ${2:klíč}: '${3:hodnota}' });",
+      "});"
+    ],
+    "description": "Express-style GET route"
+  },
+  "WebServer - Route POST": {
+    "prefix": "route-post",
+    "body": [
+      "app.post('${1:/cesta}', (req, res) => {",
+      "\tkonstanta data = req.tělo;",
+      "\t${2:// zpracování}",
+      "\tres.odešliJSON({ úspěch: pravda, data });",
+      "});"
+    ],
+    "description": "Express-style POST route"
+  },
+  "WebServer - Middleware": {
+    "prefix": "middleware",
+    "body": [
+      "app.použij((req, res, další) => {",
+      "\t${1:// middleware kód}",
+      "\tdalší();",
+      "});"
+    ],
+    "description": "Express-style middleware"
+  },
+  "Soubor - Přečti": {
+    "prefix": "čti-soubor",
+    "body": [
+      "async funkce ${1:načtiSoubor}() {",
+      "\tzkus {",
+      "\t\tkonstanta obsah = čekej přečtiSoubor('${2:cesta}');",
+      "\t\tvrať obsah;",
+      "\t} chyť (chyba) {",
+      "\t\tvypisChybu('Chyba čtení:', chyba);",
+      "\t}",
+      "}"
+    ],
+    "description": "Přečte soubor asynchronně"
+  },
+  "Soubor - Zapiš": {
+    "prefix": "zapiš-soubor",
+    "body": [
+      "async funkce ${1:ulož}() {",
+      "\tzkus {",
+      "\t\tčekej zapisSoubor('${2:cesta}', ${3:obsah});",
+      "\t\tvypiš('Soubor uložen');",
+      "\t} chyť (chyba) {",
+      "\t\tvypisChybu('Chyba zápisu:', chyba);",
+      "\t}",
+      "}"
+    ],
+    "description": "Zapíše do souboru asynchronně"
+  },
+  "Test skupina": {
+    "prefix": "test-skupina",
+    "body": [
+      "skupina('${1:Název skupiny}', () => {",
+      "\ttestuj('${2:popis testu}', () => {",
+      "\t\točekávej(${3:hodnota}).býtRovno(${4:očekávaná});",
+      "\t});",
+      "});"
+    ],
+    "description": "Testovací skupina"
+  },
+  "Test": {
+    "prefix": "test",
+    "body": [
+      "testuj('${1:popis testu}', () => {",
+      "\točekávej(${2:hodnota}).${3:býtRovno}(${4:očekávaná});",
+      "});"
+    ],
+    "description": "Jednoduchý test"
+  },
+  "Async test": {
+    "prefix": "test-async",
+    "body": [
+      "async testuj('${1:popis testu}', async () => {",
+      "\tkonstanta výsledek = čekej ${2:asyncFunkce}();",
+      "\točekávej(výsledek).${3:býtRovno}(${4:očekávaná});",
+      "});"
+    ],
+    "description": "Asynchronní test"
+  },
+  "Mock funkce": {
+    "prefix": "mock",
+    "body": [
+      "konstanta ${1:mockFn} = vytvořMock();"
+    ],
+    "description": "Vytvoří mock funkci"
+  },
+  "Math - Faktoriál": {
+    "prefix": "faktoriál",
+    "body": [
+      "faktoriál(${1:n})"
+    ],
+    "description": "Vypočítá faktoriál"
+  },
+  "Math - Fibonacci": {
+    "prefix": "fibonacci",
+    "body": [
+      "fibonacci(${1:n})"
+    ],
+    "description": "Vypočítá Fibonacci číslo"
+  },
+  "Math - Průměr": {
+    "prefix": "průměr",
+    "body": [
+      "průměr([${1:čísla}])"
+    ],
+    "description": "Vypočítá průměr"
+  },
+  "String - Slugify": {
+    "prefix": "slugify",
+    "body": [
+      "slugify('${1:text}')"
+    ],
+    "description": "Převede text na URL slug"
+  },
+  "String - UUID": {
+    "prefix": "uuid",
+    "body": [
+      "konstanta ${1:id} = uuid();"
+    ],
+    "description": "Vygeneruje UUID"
+  },
+  "Validace - Email": {
+    "prefix": "je-email",
+    "body": [
+      "když (jeEmail('${1:email}')) {",
+      "\t${2:// platný email}",
+      "}"
+    ],
+    "description": "Validuje email"
+  },
+  "Validace - URL": {
+    "prefix": "je-url",
+    "body": [
+      "když (jeURL('${1:url}')) {",
+      "\t${2:// platná URL}",
+      "}"
+    ],
+    "description": "Validuje URL"
+  },
+  "DOM - Vytvoř element": {
+    "prefix": "vytvoř-element",
+    "body": [
+      "konstanta ${1:el} = vytvořElement('${2:div}');"
+    ],
+    "description": "Vytvoří DOM element"
+  },
+  "DOM - Nastav obsah": {
+    "prefix": "nastav-obsah",
+    "body": [
+      "nastavObsah(${1:element}, '${2:text}');"
+    ],
+    "description": "Nastaví textový obsah elementu"
+  },
+  "DOM - Přidej třídu": {
+    "prefix": "přidej-třídu",
+    "body": [
+      "přidejTřídu(${1:element}, '${2:třída}');"
+    ],
+    "description": "Přidá CSS třídu"
+  },
+  "DOM - Event listener": {
+    "prefix": "poslouchej",
+    "body": [
+      "poslouchej(${1:element}, '${2:click}', (${3:událost}) => {",
+      "\t${4:// zpracování}",
+      "});"
+    ],
+    "description": "Přidá event listener"
+  },
+  "Komentář funkce": {
+    "prefix": "kom-funkce",
+    "body": [
+      "/**",
+      " * ${1:Popis funkce}",
+      " * @param {${2:typ}} ${3:param} - ${4:popis parametru}",
+      " * @vrací {${5:typ}} ${6:popis návratové hodnoty}",
+      " */"
+    ],
+    "description": "JSDoc komentář pro funkci"
+  },
+  "Komentář třídy": {
+    "prefix": "kom-třída",
+    "body": [
+      "/**",
+      " * ${1:Popis třídy}",
+      " * @třída",
+      " */"
+    ],
+    "description": "JSDoc komentář pro třídu"
+  },
+  "Module exports": {
+    "prefix": "export-vše",
+    "body": [
+      "exportuj {",
+      "\t${1:export1},",
+      "\t${2:export2}",
+      "};"
+    ],
+    "description": "Exportuje více hodnot"
+  },
+  "Konzole - Varování": {
+    "prefix": "varování",
+    "body": [
+      "vypisVarování('${1:zpráva}');"
+    ],
+    "description": "Vypíše varování do konzole"
+  },
+  "Konzole - Info": {
+    "prefix": "info",
+    "body": [
+      "vypisInfo('${1:zpráva}');"
+    ],
+    "description": "Vypíše info do konzole"
+  },
+  "RegExp test": {
+    "prefix": "regex-test",
+    "body": [
+      "konstanta ${1:vzor} = /${2:pattern}/;",
+      "když (${1:vzor}.test(${3:text})) {",
+      "\t${4:// shoda}",
+      "}"
+    ],
+    "description": "Testuje regulární výraz"
+  },
+  "JSON parse": {
+    "prefix": "json-parse",
+    "body": [
+      "konstanta ${1:data} = JSON.parse(${2:jsonString});"
+    ],
+    "description": "Parsuje JSON"
+  },
+  "JSON stringify": {
+    "prefix": "json-stringify",
+    "body": [
+      "konstanta ${1:json} = JSON.stringify(${2:objekt});"
+    ],
+    "description": "Převede na JSON string"
+  }
+}

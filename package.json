@@ -1,0 +1,30 @@
+{
+  "name": "czechscript",
+  "version": "1.0.0",
+  "description": "Open-source programovací jazyk s českou syntaxí",
+  "main": "src/czechscript.js",
+  "scripts": {
+    "test": "node test/test.js",
+    "build": "node build/build.js",
+    "dev": "node examples/server.js"
+  },
+  "keywords": [
+    "czech",
+    "programming",
+    "language",
+    "transpiler",
+    "compiler",
+    "česky",
+    "programování"
+  ],
+  "author": "Ondřej Hak <hak@example.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/daker52/czechscript.git"
+  },
+  "bugs": {
+    "url": "https://github.com/daker52/czechscript/issues"
+  },
+  "homepage": "https://github.com/daker52/czechscript#readme"
+}

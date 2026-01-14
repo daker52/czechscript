@@ -1,0 +1,243 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "CzechScript",
+  "scopeName": "source.czechscript",
+  "patterns": [
+    {
+      "include": "#comments"
+    },
+    {
+      "include": "#keywords"
+    },
+    {
+      "include": "#storage"
+    },
+    {
+      "include": "#strings"
+    },
+    {
+      "include": "#numbers"
+    },
+    {
+      "include": "#operators"
+    },
+    {
+      "include": "#functions"
+    },
+    {
+      "include": "#classes"
+    },
+    {
+      "include": "#constants"
+    },
+    {
+      "include": "#variables"
+    }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.double-slash.czechscript",
+          "match": "//.*$"
+        },
+        {
+          "name": "comment.block.czechscript",
+          "begin": "/\\*",
+          "end": "\\*/"
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.czechscript",
+          "match": "\\b(když|pak|jinak|dokud|opakuj|pro_každý|v|z|přeruš|pokračuj|vrať|zkus|chyť|nakonec|hoď)\\b"
+        },
+        {
+          "name": "keyword.control.import.czechscript",
+          "match": "\\b(importuj|exportuj|jako|výchozí)\\b"
+        },
+        {
+          "name": "keyword.operator.logical.czechscript",
+          "match": "\\b(a|nebo|ne|rovno|nerovno|větší|menší|větší_rovno|menší_rovno)\\b"
+        },
+        {
+          "name": "keyword.other.czechscript",
+          "match": "\\b(nový|tento|super|instanceof|typeof|delete|yield|await|async)\\b"
+        }
+      ]
+    },
+    "storage": {
+      "patterns": [
+        {
+          "name": "storage.type.czechscript",
+          "match": "\\b(proměnná|konstanta|funkce|třída|konstruktor|statické|soukromé|veřejné|chráněné|abstraktní|konečné|rozšiřuje)\\b"
+        },
+        {
+          "name": "storage.type.primitive.czechscript",
+          "match": "\\b(číslo|řetězec|boolean|pole|objekt|prázdné|jakýkoliv|nikdy|neznámý)\\b"
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.czechscript",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.czechscript",
+              "match": "\\\\(n|t|r|\\\\|\"|')"
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.single.czechscript",
+          "begin": "'",
+          "end": "'",
+          "patterns": [
+            {
+              "name": "constant.character.escape.czechscript",
+              "match": "\\\\(n|t|r|\\\\|\"|')"
+            }
+          ]
+        },
+        {
+          "name": "string.template.czechscript",
+          "begin": "`",
+          "end": "`",
+          "patterns": [
+            {
+              "name": "meta.embedded.line.czechscript",
+              "begin": "\\$\\{",
+              "end": "\\}",
+              "patterns": [
+                {
+                  "include": "$self"
+                }
+              ]
+            },
+            {
+              "name": "constant.character.escape.czechscript",
+              "match": "\\\\."
+            }
+          ]
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.hex.czechscript",
+          "match": "\\b0[xX][0-9a-fA-F]+\\b"
+        },
+        {
+          "name": "constant.numeric.binary.czechscript",
+          "match": "\\b0[bB][01]+\\b"
+        },
+        {
+          "name": "constant.numeric.octal.czechscript",
+          "match": "\\b0[oO][0-7]+\\b"
+        },
+        {
+          "name": "constant.numeric.decimal.czechscript",
+          "match": "\\b\\d+\\.?\\d*([eE][+-]?\\d+)?\\b"
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "name": "keyword.operator.arithmetic.czechscript",
+          "match": "\\+\\+|--|\\+|\\-|\\*\\*|\\*|/|%"
+        },
+        {
+          "name": "keyword.operator.comparison.czechscript",
+          "match": "===|!==|==|!=|<=|>=|<|>"
+        },
+        {
+          "name": "keyword.operator.logical.czechscript",
+          "match": "&&|\\|\\||!"
+        },
+        {
+          "name": "keyword.operator.assignment.czechscript",
+          "match": "=|\\+=|-=|\\*=|/=|%=|\\*\\*=|&&=|\\|\\|=|\\?\\?="
+        },
+        {
+          "name": "keyword.operator.other.czechscript",
+          "match": "\\?\\?|\\?\\.|\\.\\.\\.|\\.\\."
+        }
+      ]
+    },
+    "functions": {
+      "patterns": [
+        {
+          "name": "meta.function.czechscript",
+          "match": "\\b(funkce)\\s+([a-záčďéěíňóřšťúůýžA-ZÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ_][a-záčďéěíňóřšťúůýžA-ZÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ0-9_]*)\\s*\\(",
+          "captures": {
+            "1": {
+              "name": "storage.type.function.czechscript"
+            },
+            "2": {
+              "name": "entity.name.function.czechscript"
+            }
+          }
+        },
+        {
+          "name": "entity.name.function.czechscript",
+          "match": "\\b([a-záčďéěíňóřšťúůýžA-ZÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ_][a-záčďéěíňóřšťúůýžA-ZÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ0-9_]*)\\s*(?=\\()"
+        }
+      ]
+    },
+    "classes": {
+      "patterns": [
+        {
+          "name": "meta.class.czechscript",
+          "match": "\\b(třída)\\s+([a-záčďéěíňóřšťúůýžA-ZÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ_][a-záčďéěíňóřšťúůýžA-ZÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ0-9_]*)",
+          "captures": {
+            "1": {
+              "name": "storage.type.class.czechscript"
+            },
+            "2": {
+              "name": "entity.name.type.class.czechscript"
+            }
+          }
+        },
+        {
+          "name": "storage.type.constructor.czechscript",
+          "match": "\\b(konstruktor)\\b"
+        }
+      ]
+    },
+    "constants": {
+      "patterns": [
+        {
+          "name": "constant.language.boolean.czechscript",
+          "match": "\\b(pravda|nepravda)\\b"
+        },
+        {
+          "name": "constant.language.null.czechscript",
+          "match": "\\b(null|nedefinováno)\\b"
+        },
+        {
+          "name": "constant.language.czechscript",
+          "match": "\\b(NaN|Infinity|undefined)\\b"
+        }
+      ]
+    },
+    "variables": {
+      "patterns": [
+        {
+          "name": "variable.language.this.czechscript",
+          "match": "\\b(tento)\\b"
+        },
+        {
+          "name": "variable.other.czechscript",
+          "match": "\\b[a-záčďéěíňóřšťúůýžA-ZÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ_][a-záčďéěíňóřšťúůýžA-ZÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ0-9_]*\\b"
+        }
+      ]
+    }
+  }
+}

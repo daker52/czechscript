@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CzechScript Playground | Online Editor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/monokai.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        header h1 {
+            font-size: 28px;
+            font-weight: 600;
+        }
+        
+        header .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        header .logo img {
+            width: 40px;
+            height: 40px;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 10px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-run {
+            background: #10b981;
+            color: white;
+        }
+        
+        .btn-run:hover {
+            background: #059669;
+        }
+        
+        .btn-clear {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .btn-clear:hover {
+            background: #dc2626;
+        }
+        
+        .btn-examples {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .btn-examples:hover {
+            background: #2563eb;
+        }
+        
+        .btn-share {
+            background: #f59e0b;
+            color: white;
+        }
+        
+        .btn-share:hover {
+            background: #d97706;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            height: calc(100vh - 160px);
+        }
+        
+        .editor-panel,
+        .output-panel {
+            padding: 20px;
+        }
+        
+        .editor-panel {
+            border-right: 2px solid #e5e7eb;
+        }
+        
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .panel-header h2 {
+            font-size: 18px;
+            color: #374151;
+        }
+        
+        .CodeMirror {
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 14px;
+            height: calc(100% - 50px);
+        }
+        
+        .output {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            height: calc(100% - 50px);
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+        
+        .output .log {
+            margin-bottom: 10px;
+        }
+        
+        .output .log.error {
+            color: #ef4444;
+        }
+        
+        .output .log.success {
+            color: #10b981;
+        }
+        
+        .output .log.info {
+            color: #3b82f6;
+        }
+        
+        .output .log.warn {
+            color: #f59e0b;
+        }
+        
+        footer {
+            background: #f9fafb;
+            padding: 15px 30px;
+            text-align: center;
+            color: #6b7280;
+            font-size: 14px;
+            border-top: 2px solid #e5e7eb;
+        }
+        
+        .examples-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .examples-modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .modal-content h3 {
+            margin-bottom: 20px;
+            color: #374151;
+        }
+        
+        .example-item {
+            padding: 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .example-item:hover {
+            border-color: #667eea;
+            transform: translateX(5px);
+        }
+        
+        .example-item h4 {
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+        
+        .example-item p {
+            color: #6b7280;
+            font-size: 14px;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 20px;
+            font-size: 12px;
+            color: #9ca3af;
+        }
+        
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="45" fill="white"/>
+                    <text x="50" y="70" font-size="60" font-weight="bold" fill="#667eea" text-anchor="middle">Č</text>
+                </svg>
+                <h1>CzechScript Playground</h1>
+            </div>
+            <div class="controls">
+                <button class="btn-run" onclick="spustit()">
+                    ▶️ Spustit
+                </button>
+                <button class="btn-clear" onclick="vymazat()">
+                    🗑️ Vymazat
+                </button>
+                <button class="btn-examples" onclick="zobrazitPříklady()">
+                    📚 Příklady
+                </button>
+                <button class="btn-share" onclick="sdílet()">
+                    🔗 Sdílet
+                </button>
+            </div>
+        </header>
+        
+        <div class="main-content">
+            <div class="editor-panel">
+                <div class="panel-header">
+                    <h2>📝 Editor</h2>
+                    <div class="stats">
+                        <div class="stat">
+                            <span>Řádky:</span>
+                            <span id="lineCount">1</span>
+                        </div>
+                        <div class="stat">
+                            <span>Znaky:</span>
+                            <span id="charCount">0</span>
+                        </div>
+                    </div>
+                </div>
+                <textarea id="editor">// Vítejte v CzechScript Playground! 🎉
+
+funkce pozdrav(jméno) {
+    vrať "Ahoj, " + jméno + "! 👋";
+}
+
+proměnná zpráva = pozdrav("Světe");
+vypiš(zpráva);
+
+// Zkuste napsat vlastní kód:
+proměnná čísla = [1, 2, 3, 4, 5];
+proměnná součet = 0;
+
+pro (proměnná i = 0; i < čísla.délka; i++) {
+    součet += čísla[i];
+}
+
+vypiš("Součet:", součet);
+</textarea>
+            </div>
+            
+            <div class="output-panel">
+                <div class="panel-header">
+                    <h2>📺 Výstup</h2>
+                    <div class="stats">
+                        <div class="stat">
+                            <span>Čas:</span>
+                            <span id="execTime">0ms</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="output" class="output">
+                    <div class="log info">Klikněte na "Spustit" pro vykonání kódu...</div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>CzechScript © 2024 | První český programovací jazyk | <a href="https://github.com/daker52/czechscript" target="_blank">GitHub</a></p>
+        </footer>
+    </div>
+    
+    <div id="examplesModal" class="examples-modal">
+        <div class="modal-content">
+            <h3>📚 Příklady kódu</h3>
+            
+            <div class="example-item" onclick="načístPříklad('hello')">
+                <h4>👋 Hello World</h4>
+                <p>Základní program pro výpis textu</p>
+            </div>
+            
+            <div class="example-item" onclick="načístPříklad('kalkulačka')">
+                <h4>🧮 Kalkulačka</h4>
+                <p>Jednoduché matematické operace</p>
+            </div>
+            
+            <div class="example-item" onclick="načístPříklad('fibonacci')">
+                <h4>🔢 Fibonacci</h4>
+                <p>Generování Fibonacciho posloupnosti</p>
+            </div>
+            
+            <div class="example-item" onclick="načístPříklad('třída')">
+                <h4>🏛️ Objekty a třídy</h4>
+                <p>Práce s třídami a objekty</p>
+            </div>
+            
+            <div class="example-item" onclick="načístPříklad('async')">
+                <h4>⏱️ Asynchronní kód</h4>
+                <p>Async/await a Promises</p>
+            </div>
+            
+            <button onclick="zavřítModal()" style="margin-top: 20px; width: 100%;">Zavřít</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/javascript/javascript.min.js"></script>
+    
+    <script>
+        // Initialize CodeMirror
+        const editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
+            mode: 'javascript',
+            theme: 'monokai',
+            lineNumbers: true,
+            autoCloseBrackets: true,
+            matchBrackets: true,
+            indentUnit: 4,
+            tabSize: 4,
+            lineWrapping: true
+        });
+        
+        // Update stats
+        editor.on('change', () => {
+            const doc = editor.getDoc();
+            document.getElementById('lineCount').textContent = doc.lineCount();
+            document.getElementById('charCount').textContent = doc.getValue().length;
+        });
+        
+        // Examples
+        const příklady = {
+            hello: `// 👋 Hello World
+vypiš("Ahoj, světe! 🌍");
+vypiš("CzechScript je super! 🚀");`,
+            
+            kalkulačka: `// 🧮 Kalkulačka
+funkce sečti(a, b) {
+    vrať a + b;
+}
+
+funkce odečti(a, b) {
+    vrať a - b;
+}
+
+funkce vynásob(a, b) {
+    vrať a * b;
+}
+
+funkce vyděl(a, b) {
+    když (b === 0) {
+        vrať "Nelze dělit nulou!";
+    }
+    vrať a / b;
+}
+
+vypiš("5 + 3 =", sečti(5, 3));
+vypiš("5 - 3 =", odečti(5, 3));
+vypiš("5 * 3 =", vynásob(5, 3));
+vypiš("5 / 3 =", vyděl(5, 3));`,
+            
+            fibonacci: `// 🔢 Fibonacci posloupnost
+funkce fibonacci(n) {
+    když (n <= 1) {
+        vrať n;
+    }
+    vrať fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+vypiš("Fibonacci posloupnost:");
+pro (proměnná i = 0; i < 10; i++) {
+    vypiš("F(" + i + ") =", fibonacci(i));
+}`,
+            
+            třída: `// 🏛️ Třídy a objekty
+třída Osoba {
+    konstruktor(jméno, věk) {
+        toto.jméno = jméno;
+        toto.věk = věk;
+    }
+    
+    představSe() {
+        vrať "Ahoj, jmenuji se " + toto.jméno + 
+               " a je mi " + toto.věk + " let.";
+    }
+    
+    majiVek() {
+        vrať toto.věk >= 18;
+    }
+}
+
+proměnná osoba = nový Osoba("Jan", 25);
+vypiš(osoba.představSe());
+vypiš("Je plnoletý?", osoba.majiVek());`,
+            
+            async: `// ⏱️ Asynchronní kód
+async funkce počkej(ms) {
+    vrať nový Promise((resolve) => {
+        setTimeout(resolve, ms);
+    });
+}
+
+async funkce hlavní() {
+    vypiš("Začínám...");
+    
+    čekej počkej(1000);
+    vypiš("1 sekunda uběhla");
+    
+    čekej počkej(1000);
+    vypiš("2 sekundy uběhly");
+    
+    čekej počkej(1000);
+    vypiš("3 sekundy uběhly");
+    
+    vypiš("Hotovo!");
+}
+
+hlavní();`
+        };
+        
+        function spustit() {
+            const kód = editor.getValue();
+            const výstup = document.getElementById('output');
+            výstup.innerHTML = '';
+            
+            const začátek = performance.now();
+            
+            try {
+                // Czech to JS translation
+                const jsKód = přeložit(kód);
+                
+                // Capture console output
+                const logy = [];
+                const původníLog = console.log;
+                console.log = (...args) => {
+                    logy.push({ typ: 'log', zpráva: args.join(' ') });
+                };
+                
+                // Execute
+                eval(jsKód);
+                
+                // Restore console
+                console.log = původníLog;
+                
+                // Display output
+                logy.forEach(log => {
+                    const div = document.createElement('div');
+                    div.className = 'log ' + log.typ;
+                    div.textContent = log.zpráva;
+                    výstup.appendChild(div);
+                });
+                
+                if (logy.length === 0) {
+                    výstup.innerHTML = '<div class="log success">✅ Kód úspěšně vykonán (bez výstupu)</div>';
+                }
+                
+            } catch (err) {
+                výstup.innerHTML = `<div class="log error">❌ Chyba: ${err.message}</div>`;
+            }
+            
+            const konec = performance.now();
+            document.getElementById('execTime').textContent = Math.round(konec - začátek) + 'ms';
+        }
+        
+        function vymazat() {
+            editor.setValue('');
+            document.getElementById('output').innerHTML = '<div class="log info">Editor vymazán</div>';
+        }
+        
+        function zobrazitPříklady() {
+            document.getElementById('examplesModal').classList.add('active');
+        }
+        
+        function zavřítModal() {
+            document.getElementById('examplesModal').classList.remove('active');
+        }
+        
+        function načístPříklad(název) {
+            editor.setValue(příklady[název]);
+            zavřítModal();
+        }
+        
+        function sdílet() {
+            const kód = editor.getValue();
+            const encoded = btoa(encodeURIComponent(kód));
+            const url = window.location.origin + window.location.pathname + '?code=' + encoded;
+            
+            navigator.clipboard.writeText(url).then(() => {
+                alert('✅ Odkaz zkopírován do schránky!');
+            });
+        }
+        
+        // Simple Czech to JS translator
+        function přeložit(kód) {
+            return kód
+                .replace(/vypiš\(/g, 'console.log(')
+                .replace(/funkce /g, 'function ')
+                .replace(/vrať /g, 'return ')
+                .replace(/proměnná /g, 'let ')
+                .replace(/konstanta /g, 'const ')
+                .replace(/když /g, 'if ')
+                .replace(/jinak /g, 'else ')
+                .replace(/pro /g, 'for ')
+                .replace(/dokud /g, 'while ')
+                .replace(/třída /g, 'class ')
+                .replace(/nový /g, 'new ')
+                .replace(/toto\./g, 'this.')
+                .replace(/konstruktor\(/g, 'constructor(')
+                .replace(/čekej /g, 'await ')
+                .replace(/async funkce/g, 'async function')
+                .replace(/\.délka/g, '.length');
+        }
+        
+        // Load code from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const codeParam = urlParams.get('code');
+        if (codeParam) {
+            try {
+                const decoded = decodeURIComponent(atob(codeParam));
+                editor.setValue(decoded);
+            } catch (e) {
+                console.error('Chyba při načítání kódu z URL');
+            }
+        }
+    </script>
+</body>
+</html>

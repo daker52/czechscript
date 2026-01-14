@@ -1,0 +1,161 @@
+{
+  "name": "czechscript",
+  "displayName": "CzechScript Language Support",
+  "description": "Podpora CzechScript jazyka - syntax highlighting, snippets a IntelliSense",
+  "version": "1.0.0",
+  "publisher": "daker52",
+  "icon": "images/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/daker52/czechscript-vscode"
+  },
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Snippets",
+    "Formatters"
+  ],
+  "keywords": [
+    "czechscript",
+    "czech",
+    "čeština",
+    "programming language",
+    "transpiler"
+  ],
+  "activationEvents": [
+    "onLanguage:czechscript"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "czechscript",
+        "aliases": [
+          "CzechScript",
+          "czechscript",
+          "cs"
+        ],
+        "extensions": [
+          ".cs"
+        ],
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "./images/file-icon.svg",
+          "dark": "./images/file-icon.svg"
+        }
+      }
+    ],
+    "grammars": [
+      {
+        "language": "czechscript",
+        "scopeName": "source.czechscript",
+        "path": "./syntaxes/czechscript.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "czechscript",
+        "path": "./snippets/czechscript.json"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "CzechScript",
+      "properties": {
+        "czechscript.compiler.path": {
+          "type": "string",
+          "default": "czechscript",
+          "description": "Cesta k CzechScript compileru"
+        },
+        "czechscript.compiler.optimize": {
+          "type": "boolean",
+          "default": true,
+          "description": "Povolit optimalizace při kompilaci"
+        },
+        "czechscript.compiler.strict": {
+          "type": "boolean",
+          "default": false,
+          "description": "Striktní režim - více kontrol"
+        },
+        "czechscript.format.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "Povolit automatické formátování"
+        },
+        "czechscript.format.indentSize": {
+          "type": "number",
+          "default": 4,
+          "description": "Velikost odsazení"
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "czechscript.compile",
+        "title": "Zkompilovat CzechScript soubor",
+        "category": "CzechScript"
+      },
+      {
+        "command": "czechscript.run",
+        "title": "Spustit CzechScript soubor",
+        "category": "CzechScript"
+      },
+      {
+        "command": "czechscript.showAST",
+        "title": "Zobrazit AST",
+        "category": "CzechScript"
+      },
+      {
+        "command": "czechscript.newFile",
+        "title": "Nový CzechScript soubor",
+        "category": "CzechScript"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "czechscript.compile",
+        "key": "ctrl+shift+b",
+        "when": "resourceLangId == czechscript"
+      },
+      {
+        "command": "czechscript.run",
+        "key": "ctrl+shift+r",
+        "when": "resourceLangId == czechscript"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "resourceLangId == czechscript",
+          "command": "czechscript.compile",
+          "group": "czechscript@1"
+        },
+        {
+          "when": "resourceLangId == czechscript",
+          "command": "czechscript.run",
+          "group": "czechscript@2"
+        },
+        {
+          "when": "resourceLangId == czechscript",
+          "command": "czechscript.showAST",
+          "group": "czechscript@3"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package",
+    "publish": "vsce publish"
+  },
+  "devDependencies": {
+    "@types/node": "^18.x",
+    "@types/vscode": "^1.75.0",
+    "typescript": "^5.0.0",
+    "vsce": "^2.15.0"
+  }
+}
